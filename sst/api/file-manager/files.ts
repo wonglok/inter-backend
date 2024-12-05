@@ -7,7 +7,7 @@ import {
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { LambdaFunctionURLEvent } from "aws-lambda";
 import { Resource } from "sst";
-import { tokeToVerifiedData } from "./auth";
+import { tokeToVerifiedData } from "../auth";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
 //
@@ -22,7 +22,7 @@ export const signVideo = async (event: LambdaFunctionURLEvent) => {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -53,7 +53,7 @@ export const removeVideo = async (event: LambdaFunctionURLEvent) => {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -90,7 +90,7 @@ export const signGenericFile = async (event: LambdaFunctionURLEvent) => {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -121,7 +121,7 @@ export const removeGenericFile = async (event: LambdaFunctionURLEvent) => {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 

@@ -45,7 +45,7 @@ export const needsSetup = async (event: LambdaFunctionURLEvent) => {
       role: {
         AttributeValueList: [
           //
-          { S: "teacher" },
+          { S: "admin" },
         ],
         ComparisonOperator: "EQ",
       },
@@ -125,7 +125,7 @@ export const setupFirstUser = async (event: LambdaFunctionURLEvent) => {
       role: {
         AttributeValueList: [
           //
-          { S: "teacher" },
+          { S: "admin" },
         ],
         ComparisonOperator: "EQ",
       },
@@ -144,7 +144,7 @@ export const setupFirstUser = async (event: LambdaFunctionURLEvent) => {
           userID: crypto.randomUUID(),
           username: inbound.username,
           passwordHash: bcryptjs.hashSync(inbound.password, 10),
-          role: "teacher",
+          role: "admin",
           status: "enabled",
         }),
       });
@@ -164,7 +164,7 @@ export const setupFirstUser = async (event: LambdaFunctionURLEvent) => {
           role: {
             AttributeValueList: [
               //
-              { S: "teacher" },
+              { S: "admin" },
             ],
             ComparisonOperator: "EQ",
           },

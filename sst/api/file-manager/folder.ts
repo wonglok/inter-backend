@@ -1,6 +1,6 @@
 import { LambdaFunctionURLEvent } from "aws-lambda";
-import { tokeToVerifiedData } from "./auth";
-import { dynaClient } from "./client";
+import { tokeToVerifiedData } from "../auth";
+import { dynaClient } from "../client";
 import {
   DeleteItemCommand,
   GetItemCommand,
@@ -25,7 +25,7 @@ export const create = async (event: LambdaFunctionURLEvent) => {
     return { error: "bad-token" };
   }
 
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -73,7 +73,7 @@ export const create = async (event: LambdaFunctionURLEvent) => {
 // async function checkRights({ itemID, userID, role }) {
 //   let canRun = false;
 
-//   if (role === "admin" || role === "teacher") {
+//   if (role === "admin" || role === "admin") {
 //     canRun = true;
 //   }
 
@@ -110,7 +110,7 @@ export const remove = async (event: LambdaFunctionURLEvent) => {
     return { error: "bad-token" };
   }
 
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -154,7 +154,7 @@ export const get = async (event: LambdaFunctionURLEvent) => {
     return { error: "bad-token" };
   }
 
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -199,7 +199,7 @@ export const update = async (event: LambdaFunctionURLEvent) => {
     return { error: "bad-token" };
   }
 
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -272,7 +272,7 @@ export const list = async (event: LambdaFunctionURLEvent) => {
     return { error: "bad-token" };
   }
 
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 

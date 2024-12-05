@@ -7,8 +7,6 @@ import {
 import { Resource } from "sst";
 import { dynaClient } from "../client";
 import {
-  BatchGetItemCommand,
-  BatchWriteItemCommand,
   DeleteItemCommand,
   GetItemCommand,
   PutItemCommand,
@@ -27,7 +25,7 @@ export async function create(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -53,7 +51,7 @@ export async function create(event: LambdaFunctionURLEvent) {
         userID: crypto.randomUUID(),
         username: inbound.username,
         passwordHash: bcryptjs.hashSync(inbound.password, 10),
-        role: "teacher",
+        role: "admin",
         status: "enabled",
       }),
     })
@@ -64,7 +62,7 @@ export async function create(event: LambdaFunctionURLEvent) {
   };
 }
 
-export async function removeTeacher(event: LambdaFunctionURLEvent) {
+export async function removeAdmin(event: LambdaFunctionURLEvent) {
   let inbound = JSON.parse(event.body);
   let token = event.headers["token"];
   let { data, isValid } = await tokeToVerifiedData({ token: token });
@@ -72,7 +70,7 @@ export async function removeTeacher(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -146,7 +144,7 @@ export async function removeTeacher(event: LambdaFunctionURLEvent) {
   //       userID: crypto.randomUUID(),
   //       username: inbound.username,
   //       passwordHash: bcryptjs.hashSync(inbound.password, 10),
-  //       role: "teacher",
+  //       role: "admin",
   //       status: "enabled",
   //     }),
   //   })
@@ -166,7 +164,7 @@ export async function taken(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -191,7 +189,7 @@ export async function list(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -202,7 +200,7 @@ export async function list(event: LambdaFunctionURLEvent) {
       role: {
         AttributeValueList: [
           //
-          { S: "teacher" },
+          { S: "admin" },
         ],
         ComparisonOperator: "EQ",
       },
@@ -235,7 +233,7 @@ export async function list(event: LambdaFunctionURLEvent) {
 
 //
 
-export async function updateTeacherStatus(event: LambdaFunctionURLEvent) {
+export async function updateAdminStatus(event: LambdaFunctionURLEvent) {
   let inbound = JSON.parse(event.body);
   let token = event.headers["token"];
   let { data, isValid } = await tokeToVerifiedData({ token: token });
@@ -244,7 +242,7 @@ export async function updateTeacherStatus(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -270,7 +268,7 @@ export async function updateTeacherStatus(event: LambdaFunctionURLEvent) {
 
 //
 
-export async function updateTeacherPassword(event: LambdaFunctionURLEvent) {
+export async function updateAdminPassword(event: LambdaFunctionURLEvent) {
   let inbound = JSON.parse(event.body);
   let token = event.headers["token"];
   let { data, isValid } = await tokeToVerifiedData({ token: token });
@@ -279,7 +277,7 @@ export async function updateTeacherPassword(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -313,7 +311,7 @@ export async function batchCreateStudents(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -394,7 +392,7 @@ export async function listStudents(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -448,7 +446,7 @@ export async function updateBatchStudents(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -528,7 +526,7 @@ export async function deleteBatchStudents(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -559,7 +557,7 @@ export async function provideInviteCode(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-tokewon" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -623,7 +621,7 @@ export async function refreshInviteCode(event: LambdaFunctionURLEvent) {
   if (!isValid) {
     return { error: "bad-token" };
   }
-  if (!["teacher", "admin"].some((r) => r === data.role)) {
+  if (!["admin", "system"].some((r) => r === data.role)) {
     return { error: "bad-token" };
   }
 
@@ -672,7 +670,7 @@ export async function checkInviteCode(event: LambdaFunctionURLEvent) {
   // if (!isValid) {
   //   return { error: "bad-token" };
   // }
-  // if (!["teacher", "admin"].some((r) => r === data.role)) {
+  // if (!["admin", "system"].some((r) => r === data.role)) {
   //   return { error: "bad-token" };
   // }
 
@@ -1366,7 +1364,7 @@ export async function registerStudentUsingInviteCode(
   // if (!isValid) {
   //   return { error: "bad-token" };
   // }
-  // if (!["teacher", "admin"].some((r) => r === data.role)) {
+  // if (!["admin", "system"].some((r) => r === data.role)) {
   //   return { error: "bad-token" };
   // }
 

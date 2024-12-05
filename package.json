@@ -5,16 +5,16 @@
   "scripts": {
     "dev": "npm run sst",
     "unlock": "npx sst unlock",
-    "sst": "npx sst dev --stage loklok",
+    "sst": "npx sst dev --stage development",
     "sst:load:all": "npm run sst:load:dev; npm run sst:load:staging; npm run sst:load:production;",
-    "sst:load:dev": "npx sst secret load .env.local --stage loklok",
+    "sst:load:dev": "npx sst secret load .env.local --stage development",
     "sst:load:staging": "npx sst secret load .env.local --stage staging",
     "sst:load:production": "npx sst secret load .env.local --stage production",
     "sst:deploy:staging": "npx sst deploy --stage staging",
     "sst:deploy:prod": "npx sst deploy --stage production",
     "sst:remove:prod:forever": "npx sst remove --stage production",
     "sst:remove:staging:forever": "npx sst remove --stage staging",
-    "sst:remove:dev": "npx sst dev --stage loklok"
+    "sst:remove:dev": "npx sst dev --stage development"
   },
   "keywords": [],
   "author": "",
