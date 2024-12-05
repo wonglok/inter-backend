@@ -1,0 +1,12 @@
+
+# sst
+.sst
+.env.local
+
+node_modules
+
+
+.DS_STORE
+
+venv
+
