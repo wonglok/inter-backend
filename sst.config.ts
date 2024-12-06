@@ -197,7 +197,7 @@ export default $config({
       return FRONT_END_LOCALHOST;
     };
 
-    console.log("getDomain", getDomain());
+    // console.log("getDomain", getDomain());
 
     api.route("POST /api/admin/accounts/requestVerifyEmailPublic", {
       handler: "sst/api/admin/accounts.requestVerifyEmailPublic",
